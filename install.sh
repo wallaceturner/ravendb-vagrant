@@ -12,13 +12,12 @@ usermod -aG sudo $USER
 usermod -aG www-data $USER
 
 #firewall
-ufw allow 443/tcp
-ufw allow 8080/tcp
-ufw allow 38888/tcp
-ufw enable
+ufw allow 22,8080,38888/tcp
+ufw --force enable
 
 #ravendb setup
-tar -xf /tmp/install_files/RavenDB-4.2.3-linux-x64.tar.bz2 -C /opt/
+wget -nc -P /vagrant https://hibernatingrhinos.com/downloads/RavenDB%20for%20Linux%20x64/42018 
+tar -xf /tmp/install_files/RavenDB*.tar.bz2 -C /opt/
 cp /tmp/install_files/server.pfx /opt/RavenDB/Server/
 cp /tmp/install_files/raven.settings.json /opt/RavenDB/Server/settings.json
 sed -i "s/hostname/$(hostname -f)/g" /opt/RavenDB/Server/settings.json
@@ -28,8 +27,8 @@ cp /tmp/install_files/ravendb.service /etc/systemd/system/ravendb.service
 systemctl enable ravendb.service
 systemctl start ravendb.service
 
-#cert config - note change of filename to .crt is intentional
-cp /tmp/install_files/mooo_com_CA.cer /usr/local/share/ca-certificates/certificate.crt
+#extract CA certificate out of the PFX
+openssl pkcs12 -in /tmp/install_files/server.pfx -cacerts -nokeys -chain -passin pass:"" | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /usr/local/share/ca-certificates/ca_certs.crt
 update-ca-certificates
 
 #register client certificate
