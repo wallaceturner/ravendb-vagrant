@@ -16,21 +16,21 @@ ufw allow 22,8080,38888/tcp
 ufw --force enable
 
 #ravendb setup
-wget -nc -P /vagrant https://hibernatingrhinos.com/downloads/RavenDB%20for%20Linux%20x64/42018 
-tar -xf /tmp/install_files/RavenDB*.tar.bz2 -C /opt/
-cp /tmp/install_files/server.pfx /opt/RavenDB/Server/
-cp /tmp/install_files/raven.settings.json /opt/RavenDB/Server/settings.json
+wget --no-verbose -nc -O /vagrant/RavenDB.tar.bz2 https://hibernatingrhinos.com/downloads/RavenDB%20for%20Linux%20x64/42018 
+tar -xf /vagrant/RavenDB.tar.bz2 -C /opt/
+cp /vagrant/install_files/server.pfx /opt/RavenDB/Server/
+cp /vagrant/install_files/raven.settings.json /opt/RavenDB/Server/settings.json
 sed -i "s/hostname/$(hostname -f)/g" /opt/RavenDB/Server/settings.json
 
 #ravendb service
-cp /tmp/install_files/ravendb.service /etc/systemd/system/ravendb.service
+cp /vagrant/install_files/ravendb.service /etc/systemd/system/ravendb.service
 systemctl enable ravendb.service
 systemctl start ravendb.service
 
 #extract CA certificate out of the PFX
-openssl pkcs12 -in /tmp/install_files/server.pfx -cacerts -nokeys -chain -passin pass:"" | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /usr/local/share/ca-certificates/ca_certs.crt
+openssl pkcs12 -in /vagrant/install_files/server.pfx -cacerts -nokeys -chain -passin pass:"" | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /usr/local/share/ca-certificates/ca_certs.crt
 update-ca-certificates
 
 #register client certificate
 apt-get install expect -y
-expect /tmp/install_files/trustClientCert.exp
+expect /vagrant/install_files/trustClientCert.exp

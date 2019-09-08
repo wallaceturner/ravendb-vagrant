@@ -1,14 +1,14 @@
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false  
-  NodeCount = 3
+  NodeCount = 2
    (1..NodeCount).each do |i|
 	 config.vm.define "raven#{i}" do |node|			
 			setup(node, "#{i}")
 		end
 	end
- 
-  config.vm.provision "file", source: "./install_files", destination: "/tmp/install_files"  
+   
   config.vm.provision "shell", path: "install.sh" 
+  config.vm.synced_folder ".", "/vagrant"
 end
 
 def setup(r1, index)
