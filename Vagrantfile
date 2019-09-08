@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false  
-  NodeCount = 2
+  NodeCount = 3
    (1..NodeCount).each do |i|
 	 config.vm.define "raven#{i}" do |node|			
 			setup(node, "#{i}")
