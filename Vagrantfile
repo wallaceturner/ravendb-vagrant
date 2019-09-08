@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
 	end
    
   config.vm.provision "shell", path: "install.sh" 
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder ".", "/vagrant",mount_options: ["dmode=775,fmode=664"]
 end
 
 def setup(r1, index)
