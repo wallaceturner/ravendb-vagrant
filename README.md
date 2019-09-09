@@ -21,7 +21,7 @@ Getting Started
 
 Navigate to the root folder and run
 
-```
+```powershell
 vagrant up
 ```
 
@@ -29,7 +29,7 @@ The first time this runs it will download the VM image (subsequent runs are fast
 
 While that is booting you need to trust the self-signed certificate and register it in certificate store: (Administrator Powershell prompt; PFX has no password)
 
-```
+```powershell
 certutil -importpfx -f -user ./install_files/client.pfx
 ````
 
