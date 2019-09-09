@@ -21,26 +21,27 @@ Getting Started
 
 Navigate to the root folder and run
 
-`vagrant up`
+```
+vagrant up
+```
 
 The first time this runs it will download the VM image (subsequent runs are faster)
 
 While that is booting you need to trust the self-signed certificate and register it in certificate store: (Administrator Powershell prompt; PFX has no password)
 
-`certutil -importpfx -f -user ./install_files/client.pfx`
+```
+certutil -importpfx -f -user ./install_files/client.pfx
+````
 
 
 After the VMs boot you can navigate to the desired node:
 
-`https://raven1.mooo.com:8080/`
+```
+https://raven1.mooo.com:8080/
+```
 
-OR
+Replace `raven1` with `raven2` or `raven3` to browse that node
 
-`https://raven2.mooo.com:8080/`
-
-OR 
-
-`https://raven3.mooo.com:8080/`
 
 
 

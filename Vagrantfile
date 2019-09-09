@@ -13,7 +13,7 @@ end
 
 def setup(r1, index)
 	
-	r1.vm.box = "generic/ubuntu1804"	
+	r1.vm.box = "hashicorp/bionic64"	
 	r1.vm.network "private_network", ip: "192.168.43.1" + index
 	r1.vm.hostname = "raven" + index + ".mooo.com"
 	r1.vm.provider "virtualbox" do |vb|
