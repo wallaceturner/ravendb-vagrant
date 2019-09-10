@@ -1,6 +1,8 @@
 # ravendb-vagrant
 A demostration of a highly available multi node RavenDB setup using Vagrant and Ubuntu
 
+![Network Overview][network]
+
 
 Overview
 ---
@@ -48,3 +50,4 @@ Replace `raven1` with `raven2` or `raven3` to browse that node
 
 
 [1]:https://www.vagrantup.com/
+[network]: https://wallaceturner.azurewebsites.net/get/network_raven_ubuntu.png "Network Overview"
