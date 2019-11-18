@@ -4,3 +4,5 @@ RavenDB.tar.bz2
 node_modules/
 *.js
 *.js.map
+client/dotnet/bin/Debug/*
+client/dotnet/obj/*

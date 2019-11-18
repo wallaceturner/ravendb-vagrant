@@ -7,7 +7,7 @@ export class App {
 
     store: DocumentStore;
     async init() {
-        const certificate = '../install_files/client.pfx';
+        const certificate = '../../install_files/client.pfx';
 
         let authOptions: IAuthOptions = {
             certificate: fs.readFileSync(certificate),
