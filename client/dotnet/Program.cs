@@ -15,15 +15,16 @@ namespace dotnet
             var certificate = new X509Certificate2("../../install_files/client.pfx");
             Store = new DocumentStore() { Database = "TestDb", Urls = new[] { "https://raven1.mooo.com:8080/" }, Certificate = certificate };
             Store.Initialize();
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
-            timer.Elapsed += timer_Elapsed;
-            timer.Start();
+            
+            var timer = new System.Threading.Timer((e) =>
+            {
+                Save();   
+            }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
             Console.WriteLine("end");
             Console.ReadLine();
         }
 
-        private static void timer_Elapsed(object sender, ElapsedEventArgs e)
+        private static void Save()
         {
             using (var session = Store.OpenSession())
             {
