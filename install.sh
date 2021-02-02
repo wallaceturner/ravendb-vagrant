@@ -3,20 +3,26 @@
 #to run manually
 #./install.sh 2>&1 | tee output.log
 
+set -x #echo on
+apt update -y
+apt upgrade -y
 
 USER=wal
 
 #add user
-useradd -u 1001 -s /bin/bash -m -p $(openssl passwd -1 fred) $USER 
+useradd -s /bin/bash -m -p $(openssl passwd -1 fred) $USER 
 usermod -aG sudo $USER
 usermod -aG www-data $USER
+
+#delete default user
+sudo deluser --remove-home ubuntu
 
 #firewall
 ufw allow 22,8080,38888/tcp
 ufw --force enable
 
 #ravendb setup
-wget --no-verbose -nc -O /vagrant/RavenDB.tar.bz2 https://hibernatingrhinos.com/downloads/RavenDB%20for%20Linux%20x64/42021
+wget --no-verbose -nc -O /vagrant/RavenDB.tar.bz2 https://hibernatingrhinos.com/downloads/RavenDB%20for%20Linux%20x64/51016
 tar -xf /vagrant/RavenDB.tar.bz2 -C /opt/
 cp /vagrant/install_files/server.pfx /opt/RavenDB/Server/
 cp /vagrant/install_files/raven.settings.json /opt/RavenDB/Server/settings.json
